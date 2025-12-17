@@ -1,0 +1,132 @@
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background-color: #f0fdf4; /* 浅绿色背景 */
+    overscroll-behavior: none; /* 防止手机下拉刷新 */
+}
+
+/* 游戏容器样式 */
+.game-container {
+    position: relative;
+    background-color: #bbada0;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    padding: 10px;
+    margin: auto;
+    touch-action: none; /* 阻止默认触摸行为 */
+}
+
+/* 网格背景层 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-cell {
+    background-color: rgba(238, 228, 218, 0.35);
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 动态方块层 */
+.tile-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    pointer-events: none; /* 让点击事件穿透到底层 */
+}
+
+.tile {
+    position: absolute;
+    width: calc(25% - 15px);
+    height: calc(25% - 15px);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    transition: transform 100ms ease-in-out, opacity 100ms ease-in-out, left 100ms ease-in-out, top 100ms ease-in-out;
+    line-height: 1.2;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    word-break: break-word;
+    padding: 2px;
+}
+
+/* 不同的 tile 样式类 (基于值) */
+.tile-2 { background: #eee4da; font-size: 14px; }
+.tile-4 { background: #ede0c8; font-size: 16px; }
+.tile-8 { background: #f2b179; color: #f9f6f2; }
+.tile-16 { background: #f59563; color: #f9f6f2; }
+.tile-32 { background: #f67c5f; color: #f9f6f2; }
+.tile-64 { background: #f65e3b; color: #f9f6f2; }
+.tile-128 { background: #edcf72; color: #f9f6f2; font-size: 14px; }
+.tile-256 { background: #edcc61; color: #f9f6f2; font-size: 14px; }
+.tile-512 { background: #edc850; color: #f9f6f2; font-size: 14px; }
+.tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 16px; }
+.tile-2048 { background: #3c3a32; color: #fff; font-size: 16px; box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.5); }
+
+/* 新生成的动画 */
+.tile-new {
+    animation: appear 200ms ease;
+}
+@keyframes appear {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* 合并时的动画 */
+.tile-merged {
+    animation: pop 200ms ease;
+    z-index: 20;
+}
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* 震动动画 (压力大) */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(238, 228, 218, 0.73);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+}
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}

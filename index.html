@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>医学生晋升之路 2048</title>
+    <!-- 引入 Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 引用外部样式表 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-gray-700">
+
+    <div class="w-full max-w-lg px-4 mb-4 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-teal-800">医学生晋升之路</h1>
+            <p class="text-sm text-teal-600">合并方块，从病历本晋升到专家！</p>
+        </div>
+        <div class="flex flex-col items-end">
+            <div class="bg-teal-700 text-white rounded p-2 min-w-[80px] text-center mb-2">
+                <div class="text-xs uppercase">得分</div>
+                <div class="font-bold text-xl" id="score">0</div>
+            </div>
+            <button onclick="restartGame()" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded text-sm transition-colors">
+                重新开局
+            </button>
+        </div>
+    </div>
+
+    <!-- 游戏主区域 -->
+    <div id="game-board" class="game-container bg-teal-900">
+        <!-- 游戏结束/胜利 遮罩 -->
+        <div id="game-message" class="overlay">
+            <p id="message-text" class="text-4xl font-bold text-gray-800 mb-4">游戏结束!</p>
+            <button onclick="restartGame()" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 px-6 rounded text-lg shadow-lg">
+                再试一次
+            </button>
+        </div>
+
+        <!-- 静态网格 -->
+        <div class="grid-container">
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        </div>
+
+        <!-- 动态方块容器 -->
+        <div id="tile-container" class="tile-container">
+            <!-- JS 将在这里生成方块 -->
+        </div>
+    </div>
+
+    <div class="mt-8 text-center text-sm text-gray-500 max-w-md px-4">
+        <p>玩法：使用 <strong>方向键</strong> 或 <strong>滑动屏幕</strong> 移动方块。</p>
+        <p>彩蛋：当合成为“总住院”时，请注意屏幕震动（模拟值班压力）。</p>
+    </div>
+
+    <!-- 引用外部脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>
